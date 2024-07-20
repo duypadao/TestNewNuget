@@ -65,7 +65,7 @@ namespace PDFCreator.Lab.Component
                     }
                     foreach (PropertyInfo property in PropertyInfo)
                     {
-                        header.Cell().Element(CellHeaderStyle).Text(property.Name).Align;
+                        header.Cell().Element(CellHeaderStyle).Text(property.Name);
                     }
                 });
                 for (int i = 0; i < Values.Count; i++)
