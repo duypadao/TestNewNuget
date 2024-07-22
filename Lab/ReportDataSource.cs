@@ -44,7 +44,14 @@ namespace PDFCreator.Lab
                 Checker = Placeholders.Name(),
                 TestingDate = Placeholders.DateTime(),
                 Remark = "/",
-                TestResults = randomTestResult
+                TestResults = randomTestResult,
+                WashingMethod = "AATCC 150",
+                TempC = Random.Next(20,40).ToString(),
+                DryMethod = "Sấy khô/tumble dry",
+                Cycle = Random.Next(1,10).ToString(),
+                ColorChange = Random.Next(1, 10).ToString(),
+                GeneralAppearance = "G",
+                Comment = "Fail"
             };
         }
         private static TestResult GenerateRandomTestResult()

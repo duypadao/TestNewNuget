@@ -4,7 +4,6 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
-using static QuestPDF.Helpers.Colors;
 
 namespace PDFCreator.Lab.Component
 {
@@ -19,6 +18,9 @@ namespace PDFCreator.Lab.Component
             Align = Align.Left
         };
         private readonly List<TableFormat> TableFormats;
+        private readonly Dictionary<Align, Action<string, IContainer>> HeaderAlign;
+        private readonly Dictionary<Align, Action<string, IContainer>> ContentAlign;
+
         public TableComponent(List<T> values, List<TableFormat>? tableFormats = null, bool includeIndex = true)
         {
             Values = values;
@@ -37,9 +39,21 @@ namespace PDFCreator.Lab.Component
                 }
             }
             TableFormats = tableFormats;
+            HeaderAlign = new Dictionary<Align, Action<string, IContainer>>
+            {
+                { Align.Left, (text, cell) => cell.Element(CellHeaderStyle).AlignLeft().Text(text) },
+                { Align.Right, (text, cell) => cell.Element(CellHeaderStyle).AlignRight().Text(text) },
+                { Align.Center, (text, cell) => cell.Element(CellHeaderStyle).AlignCenter().Text(text) }
+            };
+
+            ContentAlign = new Dictionary<Align, Action<string, IContainer>>
+            {
+                { Align.Left, (value, cell) => cell.Element(CellStyle).AlignLeft().Text(value) },
+                { Align.Right, (value, cell) => cell.Element(CellStyle).AlignRight().Text(value) },
+                { Align.Center, (value, cell) => cell.Element(CellStyle).AlignCenter().Text(value) }
+            };
         }
 
-        [Obsolete]
         public void Compose(IContainer container)
         {
             container.Table(table =>
@@ -50,34 +64,37 @@ namespace PDFCreator.Lab.Component
                     {
                         columns.ConstantColumn(40);
                     }
-                    for (int i = 0; i < PropertyInfo.Length; i++)
+                    for (int j = 0; j < PropertyInfo.Length; j++)
                     {
-                        var colSpan = TableFormats[i] is null ? 1 : TableFormats[i].ColSpan;
-                        columns.RelativeColumn(colSpan);
+                        columns.RelativeColumn(TableFormats[j].ColSpan);
                     }
                 });
-
                 table.Header(header =>
                 {
                     if (IncludeIndex)
                     {
-                        header.Cell().Element(CellHeaderStyle).Text("STT");
+                        header.Cell().Element(CellHeaderStyle).Text("STT").AlignCenter();
                     }
-                    foreach (PropertyInfo property in PropertyInfo)
+                    for (int j = 0; j < PropertyInfo.Length; j++)
                     {
-                        header.Cell().Element(CellHeaderStyle).Text(property.Name);
+                        var align = TableFormats[j].Align;
+                        var text = TableFormats[j].Caption ?? PropertyInfo[j].Name;
+                        HeaderAlign[align](text, header.Cell());
                     }
                 });
+
                 for (int i = 0; i < Values.Count; i++)
                 {
-                    var item = Values[i];
                     if (IncludeIndex)
                     {
-                        table.Cell().Element(CellStyle).AlignCenter().Text(i + 1);
+                        table.Cell().Element(CellStyle).AlignCenter().Text($"{i + 1}");
                     }
-                    foreach (PropertyInfo property in PropertyInfo)
+                    for (int j = 0; j < PropertyInfo.Length; j++)
                     {
-                        table.Cell().Element(CellStyle).Text(property.GetValue(item));
+                        var align = TableFormats[j].Align;
+                        var value = PropertyInfo[j].GetValue(Values[i])?.ToString() ?? string.Empty;
+                        
+                        ContentAlign[align](value, table.Cell());
                     }
                 }
             });
@@ -87,8 +104,8 @@ namespace PDFCreator.Lab.Component
             return container
                 .DefaultTextStyle(x => x.Bold())
                 .PaddingVertical(5)
-                .BorderBottom(1)
-                .BorderColor(Black);
+                .BorderBottom(0.5f)
+                .BorderColor(Colors.Black);
         }
 
         private static IContainer CellStyle(IContainer container)
@@ -96,8 +113,8 @@ namespace PDFCreator.Lab.Component
             return container
                 .DefaultTextStyle(x => x.Medium())
                 .PaddingVertical(5)
-                .BorderBottom(1)
-                .BorderColor(Black);
+                .BorderBottom(0.5f)
+                .BorderColor(Colors.Black);
         }
     }
 }

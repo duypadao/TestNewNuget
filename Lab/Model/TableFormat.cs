@@ -10,6 +10,7 @@ namespace PDFCreator.Lab.Model
     {
         public int ColSpan { get; set; }
         public Align Align { get; set; }
+        public string? Caption { get; set; }
     }
 
     public enum Align

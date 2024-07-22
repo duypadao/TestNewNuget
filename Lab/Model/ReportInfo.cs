@@ -38,6 +38,13 @@ namespace PDFCreator.Lab.Model
         public string Remark { get; set; } = "/";
 
         public List<TestResult> TestResults { get; set; } = new List<TestResult>();
+        public string WashingMethod { get; set; } = string.Empty;
+        public string TempC { get; set; } = string.Empty;
+        public string DryMethod { get; set; } = string.Empty;
+        public string Cycle { get; set; } = string.Empty;
+        public string ColorChange { get; set; } = string.Empty;
+        public string GeneralAppearance { get; set; } = string.Empty;
+        public string Comment { get; set; } = string.Empty;
 
     }
 }

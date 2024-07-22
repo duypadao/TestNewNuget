@@ -12,12 +12,14 @@ namespace PDFCreator.Lab.Component
         private string Value { get; }
         private string ValueTextColor { get; }
         private string ValueBackGroundColor { get; }
+        private string BorderColor { get; }
         public DataLabelComponent(string label,
                                   string value,
                                   string labelTextColor,
                                   string labelBackgroundColor,
                                   string valueTextColor,
-                                  string valueBackGroundColor)
+                                  string valueBackGroundColor,
+                                  string borderColor = "#000000")
         {
             Label = label;
             Value = value;
@@ -25,24 +27,26 @@ namespace PDFCreator.Lab.Component
             LabelBackgroundColor = labelBackgroundColor;
             ValueTextColor = valueTextColor;
             ValueBackGroundColor = valueBackGroundColor;
+            BorderColor = borderColor;
         }
         public void Compose(IContainer container)
         {
             container
                 .BorderBottom(0.5f)
+                .BorderColor(BorderColor)
                 .Row(row =>
                 {
                     row.ConstantItem(130)
                        .Background(LabelBackgroundColor)
                        .PaddingHorizontal(10)
-                       .AlignBottom()
+                       .AlignMiddle()
                        .Text(Label)
                        .FontColor(LabelTextColor)
                        .Bold();
                     row.RelativeItem()
                        .Background(ValueBackGroundColor)
                        .PaddingHorizontal(10)
-                       .AlignBottom()
+                       .AlignMiddle()
                        .Text(Value)
                        .FontColor(ValueTextColor)
                        .Italic();
