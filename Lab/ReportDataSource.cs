@@ -47,7 +47,7 @@ namespace PDFCreator.Lab
                 TestResults = randomTestResult,
                 WashingMethod = "AATCC 150",
                 TempC = Random.Next(20,40).ToString(),
-                DryMethod = "Sấy khô/tumble dry",
+                DryMethod = "Không được sử dụng lò sấy khô/Non tumble dry",
                 Cycle = Random.Next(1,10).ToString(),
                 ColorChange = Random.Next(1, 10).ToString(),
                 GeneralAppearance = "G",

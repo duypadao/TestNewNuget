@@ -93,7 +93,7 @@ public class GarmentDocument : IDocument
         {
             page.Margin(5);
             page.Size(PageSizes.A4);
-            page.DefaultTextStyle(x => x.FontSize(12).FontFamily("Calibri"));
+            page.DefaultTextStyle(x => x.FontSize(11).FontFamily("Calibri"));
             page.Margin(15);
             CreateHeader(page);
             CreateContent(page);
@@ -127,9 +127,21 @@ public class GarmentDocument : IDocument
                    .AlignRight()
                    .Column(column =>
                    {
-                       column.Item().Text($"Report No: {report.ReportNo}").Bold();
-                       column.Item().Text($"Received Date: {report.RecveicedDate}");
-                       column.Item().Text($"Report Date: {report.ReportDate}");
+                       column.Item().Row(r =>
+                       {
+                           r.ConstantItem(50).Text("Report No:").Bold().AlignLeft();
+                           r.ConstantItem(90).Text("2502410150581").Bold().AlignRight();
+                       });
+                       column.Item().Row(r =>
+                       {
+                           r.ConstantItem(70).Text("Received Date:").AlignLeft();
+                           r.ConstantItem(70).Text(report.RecveicedDate).AlignRight();
+                       });
+                       column.Item().Row(r =>
+                       {
+                           r.ConstantItem(60).Text("Report Date:").AlignLeft();
+                           r.ConstantItem(80).Text(report.ReportDate).AlignRight();
+                       });
                    });
             });
     }
@@ -379,7 +391,7 @@ public class GarmentDocument : IDocument
                        foreach(var (label, value) in methodResult)
                        {
                            col.Item()
-                              .Height(30)
+                              .MinHeight(30)
                               .Component(new DataLabelComponent(label,
                                                                 value,
                                                                 Colors.Black,
@@ -402,8 +414,8 @@ public class GarmentDocument : IDocument
                               {
                                   r.RelativeItem()
                                    .Text(item)
-                                   .Underline()
-                                   .AlignCenter();
+                                   .AlignCenter()
+                                   .Underline();
                               }
                           });
                        foreach(var (label, value) in result)
