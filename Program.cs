@@ -2,6 +2,7 @@
 using PDFCreator.Lab.Component;
 using PDFCreator.Lab.Model;
 using PDFCreator.Model;
+using QuestPDF.Companion;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -17,7 +18,7 @@ static class Program
         QuestPDF.Settings.License = LicenseType.Community;
         var report = ReportDataSource.GenerateRandomReportInfo();
         var document = new GarmentDocument(report);
-        document.ShowInPreviewer();
+        document.ShowInCompanion();
     }
     
 }

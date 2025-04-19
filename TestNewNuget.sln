@@ -11,15 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDFReader", "PDFReader\PDFR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckPrice", "..\CheckPrice\CheckPrice.csproj", "{A0D81E88-6E3A-4FEB-B22B-2381A5F607F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playwright", "..\..\RPA\Playwright\Playwright.csproj", "{6FB971EE-C77F-44BC-9EC2-D1404C5B363E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAPI", "..\..\RPA\RPAHK06_API\MSAPI\MSAPI.csproj", "{DCE89A6A-BB1D-4E02-8562-43BF0A9C4F2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddChromeExtension", "..\..\RPA\AddChromeExtension\AddChromeExtension.csproj", "{ADF925AC-DF03-4C05-A53A-28A8078941E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddChromeExtensionNetFramework", "..\..\RPA\AddChromeExtensionNetFramework\AddChromeExtensionNetFramework.csproj", "{261D69EF-7104-4E72-B050-C7D71BDAFF83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookReader", "..\OutlookReader\OutlookReader.csproj", "{F13FB7E9-4CEA-4DA5-B2B3-C65B9E670789}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TOTP", "..\TOTP\TOTP.csproj", "{7037BD14-63D8-4259-9B98-03C8C14E5ADE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookReader", "..\OutlookReader\OutlookReader.csproj", "{C47FD243-D891-4635-B26D-CA1D8FB23EB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +43,6 @@ Global
 		{A0D81E88-6E3A-4FEB-B22B-2381A5F607F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0D81E88-6E3A-4FEB-B22B-2381A5F607F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0D81E88-6E3A-4FEB-B22B-2381A5F607F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FB971EE-C77F-44BC-9EC2-D1404C5B363E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FB971EE-C77F-44BC-9EC2-D1404C5B363E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FB971EE-C77F-44BC-9EC2-D1404C5B363E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FB971EE-C77F-44BC-9EC2-D1404C5B363E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DCE89A6A-BB1D-4E02-8562-43BF0A9C4F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DCE89A6A-BB1D-4E02-8562-43BF0A9C4F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCE89A6A-BB1D-4E02-8562-43BF0A9C4F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,10 +55,14 @@ Global
 		{261D69EF-7104-4E72-B050-C7D71BDAFF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{261D69EF-7104-4E72-B050-C7D71BDAFF83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{261D69EF-7104-4E72-B050-C7D71BDAFF83}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F13FB7E9-4CEA-4DA5-B2B3-C65B9E670789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F13FB7E9-4CEA-4DA5-B2B3-C65B9E670789}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F13FB7E9-4CEA-4DA5-B2B3-C65B9E670789}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F13FB7E9-4CEA-4DA5-B2B3-C65B9E670789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7037BD14-63D8-4259-9B98-03C8C14E5ADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7037BD14-63D8-4259-9B98-03C8C14E5ADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7037BD14-63D8-4259-9B98-03C8C14E5ADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7037BD14-63D8-4259-9B98-03C8C14E5ADE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C47FD243-D891-4635-B26D-CA1D8FB23EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C47FD243-D891-4635-B26D-CA1D8FB23EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C47FD243-D891-4635-B26D-CA1D8FB23EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C47FD243-D891-4635-B26D-CA1D8FB23EB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

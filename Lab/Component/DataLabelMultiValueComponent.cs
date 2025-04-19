@@ -5,18 +5,17 @@ using PDFCreator.Lab.Extension;
 
 namespace PDFCreator.Lab.Component
 {
-    public class DataLabelComponent : IComponent
+    public class DataLabelMultiValueComponent : IComponent
     {
         private string Label { get; }
         private string LabelTextColor { get; }
         private string LabelBackgroundColor { get; }
-        private string Value { get; }
+        private List<string> Value { get; }
         private string ValueTextColor { get; }
         private string ValueBackGroundColor { get; }
         private string BorderColor { get; }
-        private bool IsCentered { get; }
-        public DataLabelComponent(string label,
-                                  string value,
+        public DataLabelMultiValueComponent(string label,
+                                  List<string> value,
                                   string labelTextColor,
                                   string labelBackgroundColor,
                                   string valueTextColor,
@@ -31,7 +30,6 @@ namespace PDFCreator.Lab.Component
             ValueTextColor = valueTextColor;
             ValueBackGroundColor = valueBackGroundColor;
             BorderColor = borderColor;
-            IsCentered = isCentered;
         }
         public void Compose(IContainer container)
         {
@@ -47,13 +45,24 @@ namespace PDFCreator.Lab.Component
                        .Text(Label)
                        .FontColor(LabelTextColor)
                        .Bold();
+                    
                     row.RelativeItem()
                        .Background(ValueBackGroundColor)
                        .PaddingHorizontal(10)
-                       .AlignMiddle()
-                       .Text(Value)
-                       .FontColor(ValueTextColor)
-                       .Italic();
+                       .Column(column =>
+                       {
+                           foreach (var item in Value)
+                           {
+                               column.Item()
+                                     .AlignMiddle()
+                                     .AlignCenter()
+                                     .Text(item)
+                                     .FontColor(ValueTextColor)
+                                     .Italic();
+
+                           }
+
+                       });
                 });
         }
         

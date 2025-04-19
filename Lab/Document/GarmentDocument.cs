@@ -5,7 +5,9 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using System.Data.Common;
 using System.Net.Http.Headers;
+using System.Reflection.Emit;
 using static GarmentDocument.GarmentColor;
+using static QuestPDF.Helpers.Colors;
 
 public class GarmentDocument : IDocument
 {
@@ -13,20 +15,21 @@ public class GarmentDocument : IDocument
     public byte[] logoImage = File.ReadAllBytes("D:\\Darius folder\\TestNewNuget\\Image\\logo.png");
     byte[] signature = File.ReadAllBytes("D:\\Darius folder\\TestNewNuget\\Image\\Signature.png");
 
+    public float scale = 0.6f;
     public (string, string)[] applicationInfomation { get; }
     public (string, string)[] reportInformation { get; }
     public (string, string)[] methodResult { get; }
-    public (string, string)[] result { get; }
+    //public (string, string)[] result { get; }
 
-    public string[] policyWarning = 
+    private string[] policyWarning = 
     {
         "Any copying or replication of this report to or for any other person or entity, or use of our name or trademark, is permitted only with our prior written permission. This report sets forth our findings solely with respect to the test samples identified herein.",
         "The results set forth in this report are not indicative or representative of the quality or characteristics of the lot from which a test sample was taken or any similar or identical product unless specifically and expressly noted.",
         "You have 60 days from date of issuance of this report to notify us of any material error or omission caused by our negligence or if you require measurement uncertainty."
     };
-    public string[] companyInfo = 
+    private string[] companyInfo = 
     {
-        "Regina Miracle VietNam Co. Ltd",
+        "Regina Miracle International VietNam Co. Ltd",
         "No.9, East West Road, VSIP Hai Phong Township, Industrial and Service Park Duong Quan Commune, Thuy Nguyen District, Hai Phong City, Vietnam.",
         "Tel: 02256.263.282 - Fax: 02252.299.080 - Website: Reginamiracle.com"
     };
@@ -80,11 +83,11 @@ public class GarmentDocument : IDocument
             ("Dry Method:", report.DryMethod),
             ("Cycle(s):", report.Cycle),
         };
-        result = new (string, string)[]
-        {
-            ("Color change:", report.ColorChange),
-            ("General Appearance:", report.GeneralAppearance),
-        };
+        //result = new (string, string)[]
+        //{
+        //    ("Color change:", report.ColorChange),
+        //    ("General Appearance:", report.GeneralAppearance),
+        //};
     }
 
     public void Compose(IDocumentContainer container)
@@ -104,6 +107,7 @@ public class GarmentDocument : IDocument
     {
         page.Header()
             //.Background(Colors.Grey.Darken2)
+            .Scale(scale)
             .BorderBottom(0.5f)
             .BorderColor(Colors.Black)
             .Container()
@@ -113,7 +117,7 @@ public class GarmentDocument : IDocument
             .Row(row =>
             {
                 row.ConstantItem(100).Image(logoImage);
-                row.RelativeItem(2)
+                row.RelativeItem(4)
                    //.Background(Colors.Red.Accent4)
                    .Text(text =>
                    {
@@ -149,6 +153,7 @@ public class GarmentDocument : IDocument
     void CreateContent(PageDescriptor page)
     {
         page.Content()
+            .Scale(scale)
             //.Background(Colors.Green.Darken1)
             .Column(column =>
             {
@@ -157,8 +162,8 @@ public class GarmentDocument : IDocument
                 AddReportInformation(column);
                 AddSection(column, "2. SUMMARY PAGE");
                 AddSummaryTable(column);
-                column.Item().PageBreak();
                 AddRemark(column);
+                column.Item().PageBreak();
                 AddSection(column, "3. TEST RESULT");
                 AddTestResult(column);
                 AddEndOfReport(column);
@@ -170,6 +175,7 @@ public class GarmentDocument : IDocument
     void CreateFooter(PageDescriptor page)
     {
         page.Footer()
+            .Scale(scale)
             .AlignCenter()
             .Text(text =>
             {
@@ -284,21 +290,16 @@ public class GarmentDocument : IDocument
     {
         column
             .Item()
-            .PaddingTop(10)
+            .PaddingTop(30)
             .Row(row =>
             {
-                row.RelativeItem(2)
-                   .Column(col =>
-                   {
-                       col.Item().Text("Remark: ").Bold();
-                       col.Item().Text("P = PASS, F = FAIL, D = DATA, N/A = Not Applicable, * = See Remark");
-                   });
-                row.RelativeItem()
-                   .Column(col =>
-                   {
-                       col.Item().Text("For and on behalf").Bold().AlignCenter();
-                       col.Item().Text("of Laboratory center").Bold().AlignCenter();
-                   });
+                row.RelativeItem(2).Text(text =>
+                {
+                    text.Span("Remark: ").Bold();
+                    text.Span("P = PASS, F = FAIL, D = DATA, N/A = Not Applicable, * = See Remark");
+                });
+
+                row.RelativeItem().Text("For and on behalf of Laboratory center").Bold().AlignCenter();
             });
         column.Item()
               .PaddingTop(10)
@@ -325,8 +326,9 @@ public class GarmentDocument : IDocument
                      });
               });
         column.Item()
-              .PaddingTop(15)
+              .PaddingTop(25)
               .BorderTop(0.5f)
+              .PaddingTop(5)
               .Column(col =>
               {
                   foreach(var item in policyWarning)
@@ -335,8 +337,9 @@ public class GarmentDocument : IDocument
                   }
               });
         column.Item()
-              .PaddingTop(15)
+              .PaddingTop(35)
               .BorderTop(0.5f)
+              .PaddingTop(5)
               .Column(col =>
               {
                   for (var i = 0;  i < companyInfo.Length; i++)
@@ -363,8 +366,8 @@ public class GarmentDocument : IDocument
             .Row(row =>
             {
                 foreach (var (label, col) in new (string, float)[] {
-                    ("METHOD",2.5f),
-                    ("RESULTS", 2),
+                    ("METHOD",2),
+                    ("RESULTS",3),
                     ("REQUIREMENT", 1),
                     ("COMMENT", 1)
                 })
@@ -384,7 +387,7 @@ public class GarmentDocument : IDocument
             .Item()
             .Row(row =>
             {
-                row.RelativeItem(2.5f)
+                row.RelativeItem(2)
                    .Border(0.5f)
                    .Column(col =>
                    {
@@ -402,7 +405,7 @@ public class GarmentDocument : IDocument
                               );
                        }
                    });
-                row.RelativeItem(2)
+                row.RelativeItem(3f)
                    .Border(0.5f)
                    .AlignMiddle()
                    .Column(col =>
@@ -410,27 +413,26 @@ public class GarmentDocument : IDocument
                        col.Item()
                           .Row(r =>
                           {
-                              foreach (var item in new string[] { "Test Item", "Result" })
-                              {
-                                  r.RelativeItem()
-                                   .Text(item)
-                                   .AlignCenter()
-                                   .Underline();
-                              }
+                              r.ConstantItem(100).Text("Test Item").AlignCenter().Underline();
+                              r.RelativeItem().Text("Result").AlignCenter().Underline();
                           });
-                       foreach(var (label, value) in result)
-                       {
-                           col.Item()
-                              .Height(30)
-                              .Component(new DataLabelComponent(label,
-                                                                value,
+                       col.Item().Height(30)
+                        .Component(new DataLabelMultiValueComponent("Color change:",
+                                                                new List<string>() { report.ColorChange },
                                                                 Colors.Black,
                                                                 GarmentColor.LabelBackGroundColor.Applicant,
                                                                 GarmentColor.ValueTextColor,
                                                                 GarmentColor.ValueBackGroundColor,
-                                                                Colors.White)
-                              );
-                       }
+                                                                Colors.White));
+                       col.Item()//.Height(60)
+                        .Component(new DataLabelMultiValueComponent("General Appearance:",
+                                                                report.GeneralAppearance,
+                                                                Colors.Black,
+                                                                GarmentColor.LabelBackGroundColor.Applicant,
+                                                                GarmentColor.ValueTextColor,
+                                                                GarmentColor.ValueBackGroundColor,
+                                                                Colors.White));
+                       
                    });
                 row.RelativeItem()
                    .Border(0.5f)

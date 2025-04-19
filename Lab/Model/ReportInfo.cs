@@ -43,7 +43,7 @@ namespace PDFCreator.Lab.Model
         public string DryMethod { get; set; } = string.Empty;
         public string Cycle { get; set; } = string.Empty;
         public string ColorChange { get; set; } = string.Empty;
-        public string GeneralAppearance { get; set; } = string.Empty;
+        public List<string> GeneralAppearance { get; set; } = new List<string>();
         public string Comment { get; set; } = string.Empty;
 
     }

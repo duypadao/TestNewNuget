@@ -50,7 +50,7 @@ namespace PDFCreator.Lab
                 DryMethod = "Không được sử dụng lò sấy khô/Non tumble dry",
                 Cycle = Random.Next(1,10).ToString(),
                 ColorChange = Random.Next(1, 10).ToString(),
-                GeneralAppearance = "G",
+                GeneralAppearance = new List<string>() { "G", "A", "B" },
                 Comment = "Fail"
             };
         }
